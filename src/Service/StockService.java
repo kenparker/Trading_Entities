@@ -22,11 +22,18 @@ import javax.persistence.EntityManager;
  * <p/>
  *
  * Change Log: 28.01.2013 OCAGroup added by Orders 31.07.2013 refactored 07.08.2013 hetQuotes added
+ * 16.05.2014 Logger refactored
  * <p/>
  */
 public class StockService
 {
 
+    private static final Logger log = Logger.getLogger(StockService.class.getName());
+    
+    public void setLogger(){
+        log.setLevel(Level.INFO);
+    }
+    
     public List<PriceBar> getQuotes(EntityManager em, String symbol, String barsize)
     {
 
@@ -34,7 +41,7 @@ public class StockService
         try {
             st = findbyName(em, symbol);
         } catch (Exception ex) {
-            Logger.getLogger(StockService.class.getName()).log(Level.INFO,
+            log.log(Level.INFO,
                     "getQuotes: Stock {0} not found", symbol);
             return null;
         }
@@ -105,15 +112,12 @@ public class StockService
                         Integer.valueOf(datequote.substring(4, 6)) - 1,
                         Integer.valueOf(datequote.substring(6, 8)));
 
-
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(StockService.class
-                    .getName()).log(Level.INFO,
+            log.log(Level.INFO,
                     "getLastDate: Stock {0} not found", symbol);
         }
-
 
         return gregorianCalendar;
     }
@@ -126,9 +130,7 @@ public class StockService
         try {
             st = findbyName(em, symbol);
             // Stock found do not add
-            Logger
-                    .getLogger(StockService.class
-                    .getName()).log(Level.INFO,
+            log.log(Level.FINE,
                     "Stock {0} cannot be added, it already exist, ", symbol);
         } catch (Exception ex) {
             // Stock not found, then add
@@ -154,7 +156,6 @@ public class StockService
         // em.flush();
         em.getTransaction().commit();
 
-
     }
 
     public void addQuote(EntityManager em, Stock stock, String intervaltype, String datequote,
@@ -168,7 +169,6 @@ public class StockService
             double valueext)
     {
         em.getTransaction().begin();
-
 
         stock = em.merge(stock);
         Barsize oneBarSize = stock.getOneBarSize(intervaltype);
@@ -192,7 +192,6 @@ public class StockService
 
             }
         }
-
 
         em.getTransaction().commit();
 
@@ -283,9 +282,7 @@ public class StockService
 
             final int endsize = oneBarSize.getQuotes().size() - 1;
 
-            Logger
-                    .getLogger(StockService.class
-                    .getName()).log(Level.INFO,
+            log.log(Level.INFO,
                     "Added " + (endsize - startsize) + " quotes for Symbol" + stock.getSymbol());
 
         }
@@ -304,14 +301,9 @@ public class StockService
             System.out.println(" BarSize for " + intervaltype + " not found");
         } else {
 
-
             oneBarSize.getQuotes().clear();
-            Logger
-                    .getLogger(StockService.class
-                    .getName()).log(Level.INFO,
+            log.log(Level.INFO,
                     "Cleared quotes for Symbol" + stock.getSymbol() + " barsize :" + intervaltype);
-
-
 
         }
 
