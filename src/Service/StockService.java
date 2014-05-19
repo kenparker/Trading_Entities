@@ -3,7 +3,9 @@ package Service;
 import Entities.Barsize;
 import Entities.Quote;
 import Entities.Stock;
+import Logger.MyLogger;
 import core.PriceBar;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -28,12 +30,15 @@ import javax.persistence.EntityManager;
 public class StockService
 {
 
-    private static final Logger log = Logger.getLogger(StockService.class.getName());
-    
-    public void setLogger(){
-        log.setLevel(Level.INFO);
+    private static final Logger log = Logger.getLogger("StockServiceLogger");
+    private String LOG_SYMBOL = "SPY";
+
+    public void setLogger() throws IOException
+    {
+        MyLogger.setup();
+        log.setLevel(Level.ALL);
     }
-    
+
     public List<PriceBar> getQuotes(EntityManager em, String symbol, String barsize)
     {
 
@@ -100,12 +105,13 @@ public class StockService
             if (oneBarSize != null && lastQuote != null) {
 
                 String datequote = lastQuote.getDatequote();
-
-                System.out.println("Symbol :" + symbol
-                        + " Barsize :" + intervaltype
-                        + " lastdate :" + Integer.valueOf(datequote.substring(0, 4))
-                        + " " + Integer.valueOf(datequote.substring(4, 6))
-                        + " " + Integer.valueOf(datequote.substring(6, 8)));
+                if (symbol.equals(LOG_SYMBOL)) {
+                    log.fine("Symbol :" + symbol
+                            + " Barsize :" + intervaltype
+                            + " lastdate :" + Integer.valueOf(datequote.substring(0, 4))
+                            + " " + Integer.valueOf(datequote.substring(4, 6))
+                            + " " + Integer.valueOf(datequote.substring(6, 8)));
+                }
 
                 gregorianCalendar = new GregorianCalendar(
                         Integer.valueOf(datequote.substring(0, 4)),
@@ -115,8 +121,10 @@ public class StockService
             }
 
         } catch (Exception ex) {
-            log.log(Level.INFO,
-                    "getLastDate: Stock {0} not found", symbol);
+            if (symbol.equals(LOG_SYMBOL)) {
+                log.log(Level.INFO,
+                        "getLastDate: Stock {0} not found", symbol);
+            }
         }
 
         return gregorianCalendar;
@@ -130,8 +138,10 @@ public class StockService
         try {
             st = findbyName(em, symbol);
             // Stock found do not add
-            log.log(Level.FINE,
-                    "Stock {0} cannot be added, it already exist, ", symbol);
+            if (symbol.equals(LOG_SYMBOL)) {
+                log.log(Level.INFO,
+                        "Stock {0} cannot be added, it already exist, ", symbol);
+            }
         } catch (Exception ex) {
             // Stock not found, then add
             st = new Stock(symbol, name);
@@ -173,7 +183,10 @@ public class StockService
         stock = em.merge(stock);
         Barsize oneBarSize = stock.getOneBarSize(intervaltype);
         if (oneBarSize == null) {
-            System.out.println(" BarSize for " + intervaltype + " not found");
+            if (stock.getSymbol().equals(LOG_SYMBOL)) {
+                log.severe(
+                        "Symbol :" + stock.getSymbol() + " BarSize for " + intervaltype + " not found");
+            }
         } else {
             //oneBarSize = em.merge(oneBarSize);
 
@@ -247,7 +260,10 @@ public class StockService
 
         Barsize oneBarSize = stock.getOneBarSize(intervaltype);
         if (oneBarSize == null) {
-            System.out.println(" BarSize for " + intervaltype + " not found");
+            if (stock.getSymbol().equals(LOG_SYMBOL)) {
+                log.severe(
+                        "Symbol :" + stock.getSymbol() + " BarSize for " + intervaltype + " not found");
+            }
         } else {
 
             String datequote = "";
@@ -266,6 +282,10 @@ public class StockService
 
                 if ((lastQuote != null && datequote.compareTo(priceBar.getDate()) < 0)
                         || lastQuote == null) {
+                    if (stock.getSymbol().equals(LOG_SYMBOL)) {
+                        log.fine("Symbol :" + stock.getSymbol()
+                                + " Last Date : " + datequote.toString() + " Bar Date : " + priceBar.getDate().toString());
+                    }
                     oneBarSize.addQuote(priceBar.getDate(),
                             priceBar.getOpen(),
                             priceBar.getHigh(),
@@ -281,9 +301,10 @@ public class StockService
             }
 
             final int endsize = oneBarSize.getQuotes().size() - 1;
-
-            log.log(Level.INFO,
-                    "Added " + (endsize - startsize) + " quotes for Symbol" + stock.getSymbol());
+            if (stock.getSymbol().equals(LOG_SYMBOL)) {
+                log.log(Level.INFO,
+                        "Added " + (endsize - startsize) + " quotes for Symbol" + stock.getSymbol());
+            }
 
         }
 
@@ -298,12 +319,16 @@ public class StockService
 
         Barsize oneBarSize = stock.getOneBarSize(intervaltype);
         if (oneBarSize == null) {
-            System.out.println(" BarSize for " + intervaltype + " not found");
+            if (stock.getSymbol().equals(LOG_SYMBOL)) {
+                log.info(" BarSize for " + intervaltype + " not found");
+            }
         } else {
 
             oneBarSize.getQuotes().clear();
-            log.log(Level.INFO,
-                    "Cleared quotes for Symbol" + stock.getSymbol() + " barsize :" + intervaltype);
+            if (stock.getSymbol().equals(LOG_SYMBOL)) {
+                log.log(Level.INFO,
+                        "Cleared quotes for Symbol" + stock.getSymbol() + " barsize :" + intervaltype);
+            }
 
         }
 
