@@ -5,7 +5,6 @@ import Entities.Quote;
 import Entities.Stock;
 import Logger.MyLogger;
 import core.PriceBar;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -30,10 +29,10 @@ import javax.persistence.EntityManager;
 public class StockService
 {
 
-    private static final Logger log = Logger.getLogger("StockServiceLogger");
+    private static final Logger log = MyLogger.getLogger();
     private String LOG_SYMBOL = "SPY";
 
-    public void setLogger() throws IOException
+    public void setLogger() 
     {
         MyLogger.setup();
         log.setLevel(Level.ALL);
