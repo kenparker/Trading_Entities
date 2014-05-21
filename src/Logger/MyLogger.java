@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 
 public class MyLogger {
 
-    //private static final String FILE_PATH = "C:/Users/magang/Documents/Logs/";
-    private static final String FILE_PATH = System.getProperty("user.dir") + "\\";
+    private static final String FILE_PATH = "C:/Users/magang/Documents/Logs/";
+    //private static final String FILE_PATH = System.getProperty("user.dir") + "\\";
     private static FileHandler fileHdlr;
     private static MyFormatter formatterTxt;
     private static Handler conHdlr;
