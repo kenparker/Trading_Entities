@@ -21,7 +21,7 @@ public class MyLogger {
     static public void setup()  {
         if (firsttime) {
             try {
-                System.out.println("Log File :"+FILE_PATH + "StockServiceLogging.txt");
+               
                 logger.setUseParentHandlers(false);
                 fileHdlr = new FileHandler(FILE_PATH + "StockServiceLogging.txt", true);
                 conHdlr = new ConsoleHandler();
