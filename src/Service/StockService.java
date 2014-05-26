@@ -35,7 +35,7 @@ public class StockService
     public void setLogger() 
     {
         MyLogger.setup();
-        log.setLevel(Level.ALL);
+        log.setLevel(Level.INFO);
     }
 
     public List<PriceBar> getQuotes(EntityManager em, String symbol, String barsize)
