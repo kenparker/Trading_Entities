@@ -46,7 +46,7 @@ public class StockService
             st = findbyName(em, symbol);
         } catch (Exception ex) {
             log.log(Level.INFO,
-                    "getQuotes: Stock {0} not found", symbol);
+                    "getQuotes: Stock " + symbol + " not found");
             return null;
         }
 
@@ -76,7 +76,7 @@ public class StockService
 
             } else {
                 String outString = "getQuotes: Stock :" + symbol + " Barsize :" + barsize + " not quotes found";
-                Logger.getLogger(StockService.class.getName()).log(Level.INFO, outString);
+                log.log(Level.INFO, outString);
                 return null;
 
             }
@@ -84,7 +84,7 @@ public class StockService
 
         } else {
             String outString = "getQuotes: Stock :" + symbol + " Barsize :" + barsize + " not found";
-            Logger.getLogger(StockService.class.getName()).log(Level.INFO, outString);
+            log.log(Level.INFO, outString);
             return null;
         }
         //</editor-fold>
@@ -122,7 +122,7 @@ public class StockService
         } catch (Exception ex) {
             if (symbol.equals(LOG_SYMBOL)) {
                 log.log(Level.INFO,
-                        "getLastDate: Stock {0} not found", symbol);
+                        "getLastDate: Stock " + symbol + " not found");
             }
         }
 
@@ -139,7 +139,7 @@ public class StockService
             // Stock found do not add
             if (symbol.equals(LOG_SYMBOL)) {
                 log.log(Level.INFO,
-                        "Stock {0} cannot be added, it already exist, ", symbol);
+                        "Stock " + symbol + " cannot be added, it already exist, ");
             }
         } catch (Exception ex) {
             // Stock not found, then add
@@ -184,7 +184,7 @@ public class StockService
         if (oneBarSize == null) {
             if (stock.getSymbol().equals(LOG_SYMBOL)) {
                 log.severe(
-                        "Symbol :" + stock.getSymbol() + " BarSize for " + intervaltype + " not found");
+                        "Symbol : " + stock.getSymbol() + " BarSize for " + intervaltype + " not found");
             }
         } else {
             //oneBarSize = em.merge(oneBarSize);
@@ -261,7 +261,7 @@ public class StockService
         if (oneBarSize == null) {
             if (stock.getSymbol().equals(LOG_SYMBOL)) {
                 log.severe(
-                        "Symbol :" + stock.getSymbol() + " BarSize for " + intervaltype + " not found");
+                        "Symbol : " + stock.getSymbol() + " BarSize for " + intervaltype + " not found");
             }
         } else {
 
@@ -302,7 +302,7 @@ public class StockService
             final int endsize = oneBarSize.getQuotes().size() - 1;
             if (stock.getSymbol().equals(LOG_SYMBOL)) {
                 log.log(Level.INFO,
-                        "Added " + (endsize - startsize) + " quotes for Symbol" + stock.getSymbol());
+                        "Added " + (endsize - startsize) + " quotes for Symbol " + stock.getSymbol());
             }
 
         }
