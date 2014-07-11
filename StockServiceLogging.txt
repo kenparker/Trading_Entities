@@ -1,0 +1,20 @@
+Wed May 21 09:18:14 CEST 2014 [FINE] Message Fine
+Wed May 21 09:18:14 CEST 2014 [INFO] Message Info
+Wed May 21 09:20:38 CEST 2014 [FINE] Message Fine
+Wed May 21 09:20:38 CEST 2014 [INFO] Message Info
+Wed May 21 09:21:53 CEST 2014 [FINE] Message Fine
+Wed May 21 09:21:53 CEST 2014 [INFO] Message Info
+Wed May 21 09:25:51 CEST 2014 [FINE] Message Fine
+Wed May 21 09:25:51 CEST 2014 [INFO] Message Info
+Wed May 21 09:26:45 CEST 2014 [FINER] Logger setup done
+Wed May 21 09:26:45 CEST 2014 [FINE] Message Fine
+Wed May 21 09:26:45 CEST 2014 [INFO] Message Info
+Wed May 21 09:27:32 CEST 2014 [FINER] Logger setup done
+Wed May 21 09:27:32 CEST 2014 [FINE] Message Fine
+Wed May 21 09:27:32 CEST 2014 [INFO] Message Info
+Wed May 21 09:28:54 CEST 2014 [FINER] Logger setup done
+Wed May 21 09:28:54 CEST 2014 [FINER] Logger is already setup
+Wed May 21 09:28:54 CEST 2014 [FINE] Message Fine
+Wed May 21 09:28:54 CEST 2014 [INFO] Message Info
+Wed May 21 09:29:38 CEST 2014 [INFO] Message Info
+Wed May 21 09:30:27 CEST 2014 [INFO] Message Info
